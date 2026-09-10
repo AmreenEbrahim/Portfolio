@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amreen Ebrahim — Senior Backend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0F0E;
+    --bg-dot: #141b18;
+    --line: #24302B;
+    --line-soft: #1A211E;
+    --text: #E8ECE7;
+    --muted: #8B958F;
+    --amber: #E8A33D;
+    --mint: #4FD1B3;
+    --max: 900px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(circle at 1px 1px, var(--bg-dot) 1px, transparent 0) 0 0/28px 28px,
+      var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--amber); color:#0B0F0E; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 28px; }
+
+  header.top{ padding:64px 0 0; }
+
+  h1.name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(34px, 6vw, 54px);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    opacity:0;
+    animation: fadein 0.6s ease-out 0.1s forwards;
+  }
+  .role{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(15px, 2.2vw, 19px);
+    color:var(--muted);
+    margin-top:10px;
+    font-weight:500;
+    opacity:0;
+    animation: fadein 0.6s ease-out 0.25s forwards;
+  }
+  .contact-row{
+    display:flex; flex-wrap:wrap; gap:18px;
+    margin-top:26px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+    opacity:0;
+    animation: fadein 0.6s ease-out 0.4s forwards;
+  }
+  .contact-row a{ color:var(--text); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:1px; }
+  .contact-row a:hover{ border-color:var(--amber); color:var(--amber); }
+
+  @keyframes fadein{
+    from{ opacity:0; transform:translateY(8px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* terminal */
+  .terminal{
+    margin-top:34px;
+    border:1px solid var(--line);
+    background:#0E1412;
+    border-radius:6px;
+    overflow:hidden;
+    opacity:0;
+    animation: fadein 0.6s ease-out 0.55s forwards;
+  }
+  .terminal-bar{
+    padding:9px 14px;
+    border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    display:flex; justify-content:space-between;
+  }
+  .terminal-body{
+    padding:18px 16px 22px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+    min-height:64px;
+  }
+  .t-prompt{ color:var(--mint); }
+  .t-out{ color:var(--text); margin-top:4px; }
+  .cursor{
+    display:inline-block; width:7px; height:14px;
+    background:var(--amber); margin-left:2px;
+    animation: blink 1s step-end infinite;
+    vertical-align:middle;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* stats strip */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-top:46px;
+  }
+  .stat{ padding:26px 24px; border-right:1px solid var(--line); }
+  .stat:last-child{ border-right:none; }
+  .stat .num{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--amber);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:6px;
+  }
+
+  section{ padding:56px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .section-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:32px; }
+  .section-head .tag{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); }
+  .section-head h2{ font-family:'Space Grotesk', sans-serif; font-size:22px; font-weight:600; }
+
+  p.summary{ max-width:68ch; color:var(--text); font-size:16px; }
+
+  /* system map */
+  .sysmap{ margin-top:36px; overflow-x:auto; }
+  .sysmap svg{ display:block; min-width:640px; width:100%; height:auto; }
+  .sm-box{ fill:#0E1412; stroke:var(--line); }
+  .sm-box.hl{ stroke:#2A3D37; }
+  .sm-text{ font-family:'IBM Plex Mono', monospace; font-size:11px; fill:var(--text); }
+  .sm-label{ font-family:'IBM Plex Mono', monospace; font-size:9.5px; fill:var(--muted); }
+  .sm-line{ stroke:#2A3D37; stroke-width:1.4; }
+  .sm-dot{ fill:var(--mint); }
+
+  /* experience */
+  .job{ display:grid; grid-template-columns:200px 1fr; gap:24px; padding:28px 0; border-top:1px solid var(--line); transition:background 0.2s; }
+  .job:first-of-type{ border-top:none; padding-top:0; }
+  .job-meta{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); }
+  .job-meta .company{ font-family:'Space Grotesk', sans-serif; font-size:17px; color:var(--text); font-weight:600; margin-bottom:6px; display:block; }
+  .job-title{ font-weight:600; font-size:15.5px; margin-bottom:12px; color:var(--text); }
+  .job ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .job li{ font-size:14.5px; color:var(--text); padding-left:16px; position:relative; }
+  .job li::before{ content:"›"; position:absolute; left:0; color:var(--amber); }
+
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+  .proj-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--mint);
+    border:1px solid #2A3D37;
+    background:#0F1613;
+    padding:3px 8px;
+    border-radius:3px;
+    cursor:pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .proj-tag:hover, .proj-tag.active{
+    background:var(--mint);
+    color:#0B0F0E;
+    border-color:var(--mint);
+  }
+  .proj-detail{
+    display:none;
+    margin-top:12px;
+    padding:12px 14px;
+    background:#0E1412;
+    border:1px solid var(--line);
+    border-left:2px solid var(--amber);
+    border-radius:3px;
+    font-size:13.5px;
+    color:var(--muted);
+  }
+  .proj-detail.show{ display:block; }
+  .proj-detail b{ color:var(--text); }
+
+  /* skills */
+  .skill-group{ padding:16px 0; border-top:1px solid var(--line); display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:start; }
+  .skill-group:first-child{ border-top:none; }
+  .skill-cat{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text);
+    border:1px solid var(--line); padding:4px 10px; border-radius:3px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .skill-tag:hover{ border-color:var(--amber); color:var(--amber); }
+
+  /* education */
+  .edu{ display:grid; grid-template-columns:200px 1fr; gap:24px; padding:14px 0; }
+  .edu-degree{ font-weight:600; font-size:15px; }
+  .edu-school{ color:var(--muted); font-size:13.5px; margin-top:3px; }
+  .edu-date{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); }
+
+  footer{ padding:48px 0 64px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  footer .fmono{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); }
+
+  @media (max-width:640px){
+    .stats{ grid-template-columns:repeat(2, 1fr); }
+    .stat:nth-child(2){ border-right:none; }
+    .job, .skill-group, .edu{ grid-template-columns:1fr; gap:8px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; opacity:1 !important; transform:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <h1 class="name">Amreen Ebrahim</h1>
+    <div class="role">Senior Backend Engineer — AI &amp; Voice AI Systems, GraphQL Federation, Distributed Backends</div>
+    <div class="contact-row">
+      <a href="mailto:amreen1294@gmail.com">amreen1294@gmail.com</a>
+      <a href="tel:+919998677855">+91 99986 77855</a>
+      <a href="https://linkedin.com/in/amreen-sorangwala-179486a0" target="_blank" rel="noopener">linkedin.com/in/amreen-sorangwala</a>
+      <span>Mumbai, India</span>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span>amreen@backend</span>
+        <span>zsh</span>
+      </div>
+      <div class="terminal-body" id="term"></div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="num" data-target="5" data-suffix="+">0</div><div class="label">YEARS IN PRODUCTION BACKEND</div></div>
+    <div class="stat"><div class="num" data-target="1" data-suffix="M+">0</div><div class="label">REQUESTS SERVED, AT SCALE</div></div>
+    <div class="stat"><div class="num" data-target="0" data-suffix="">0</div><div class="label">DOWNTIME ON GRAPHQL MIGRATION</div></div>
+    <div class="stat"><div class="num" data-target="6" data-suffix="">0</div><div class="label">VOICE / AI ENGINES INTEGRATED</div></div>
+  </div>
+
+  <section id="summary">
+    <div class="section-head">
+      <span class="tag">// about</span>
+      <h2>Summary</h2>
+    </div>
+    <p class="summary">
+      I build backend platforms that hold up under real production load — GraphQL Federation services, AI-powered agents, and Voice AI systems serving millions of requests. Most recently I led a zero-downtime migration of a monolithic GraphQL architecture to a federated one at Dream11 scale, and I've shipped enterprise voice and conversational AI across half a dozen providers. I care about systems that stay observable, mentoring engineers who'll own them after me, and shipping things that don't page anyone at 3am.
+    </p>
+
+    <div class="sysmap">
+      <svg viewBox="0 0 860 150" xmlns="http://www.w3.org/2000/svg">
+        <line x1="140" y1="75" x2="220" y2="75" class="sm-line"/>
+        <line x1="400" y1="75" x2="480" y2="75" class="sm-line"/>
+        <line x1="660" y1="75" x2="720" y2="75" class="sm-line"/>
+        <circle cx="180" cy="75" r="2.5" class="sm-dot"/>
+        <circle cx="440" cy="75" r="2.5" class="sm-dot"/>
+        <circle cx="690" cy="75" r="2.5" class="sm-dot"/>
+
+        <rect x="10" y="40" width="130" height="70" rx="4" class="sm-box"/>
+        <text x="75" y="72" text-anchor="middle" class="sm-text">Client /</text>
+        <text x="75" y="86" text-anchor="middle" class="sm-text">WhatsApp</text>
+        <text x="75" y="102" text-anchor="middle" class="sm-label">entry points</text>
+
+        <rect x="220" y="30" width="180" height="90" rx="4" class="sm-box hl"/>
+        <text x="310" y="65" text-anchor="middle" class="sm-text">GraphQL</text>
+        <text x="310" y="79" text-anchor="middle" class="sm-text">Federation Gateway</text>
+        <text x="310" y="100" text-anchor="middle" class="sm-label">Vert.x · RxJava</text>
+
+        <rect x="480" y="20" width="180" height="110" rx="4" class="sm-box"/>
+        <text x="570" y="52" text-anchor="middle" class="sm-text">Services</text>
+        <text x="570" y="70" text-anchor="middle" class="sm-label">Voice AI</text>
+        <text x="570" y="85" text-anchor="middle" class="sm-label">RAG Agents</text>
+        <text x="570" y="100" text-anchor="middle" class="sm-label">ERP Sync</text>
+
+        <rect x="720" y="30" width="130" height="90" rx="4" class="sm-box"/>
+        <text x="785" y="65" text-anchor="middle" class="sm-text">Data</text>
+        <text x="785" y="82" text-anchor="middle" class="sm-label">Mongo · Redis</text>
+        <text x="785" y="96" text-anchor="middle" class="sm-label">Aerospike · Dynamo</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <span class="tag">// experience</span>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        <span class="company">Noesis Technologies</span>
+        Jan 2024 — Present<br>Mumbai · Full-time
+      </div>
+      <div>
+        <div class="job-title">Senior Backend Engineer</div>
+        <ul>
+          <li>Built backend systems serving millions of production API requests, with a focus on scalability and observability.</li>
+          <li>Led a zero-downtime migration from monolithic to federated GraphQL architecture at Dream11 scale.</li>
+          <li>Delivered enterprise Voice AI solutions integrating OpenAI Realtime API, Whisper, Azure Speech, Deepgram, ElevenLabs, and Cartesia — plus a real-time conversational AI proof-of-concept on Ultravox.</li>
+          <li>Built AI agents using RAG, function calling, and OpenRouter; shipped AI-powered WhatsApp automation via the Waha framework and Meta WhatsApp Business API for multiple enterprise clients.</li>
+          <li>Mentored junior engineers through code review and design discussions; owned feature delivery on business-critical services.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" data-detail="Real-time ERP/MIS intelligence platform for jewellery manufacturing. Multi-agent, database-agnostic system integrating Emperor and Synergic ERP data sources with WhatsApp alerts via Waha and Meta's Business API.">QuartzAI</span>
+          <span class="proj-tag" data-detail="AI Agent platform using RAG, OpenRouter, Azure Speech and ElevenLabs, with conversational AI delivered over WhatsApp via the Waha framework.">Brainstormer</span>
+          <span class="proj-tag" data-detail="Voice AI stack spanning OpenAI Realtime API, Whisper, Azure Bodhi, Azure Speech, Deepgram, ElevenLabs and Cartesia, with a real-time conversational POC on Ultravox.">Voice AI Platform</span>
+          <span class="proj-tag" data-detail="Node.js and Magento backend for a jewellery e-commerce platform.">Origem</span>
+          <span class="proj-tag" data-detail="Backend built on Express.js with a Next.js frontend.">Novere</span>
+          <span class="proj-tag" data-detail="AI-powered WhatsApp chatbot integrated with DoubleTick for automated customer conversations.">True Diamond</span>
+          <span class="proj-tag" data-detail="AI-powered WhatsApp chatbot integrated with SendPulse.">Psylish</span>
+        </div>
+        <div class="proj-detail" id="detail-noesis"></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        <span class="company">Dream11</span>
+        Jan 2024 — Aug 2025
+      </div>
+      <div>
+        <div class="job-title">Senior Backend Engineer</div>
+        <ul>
+          <li>Designed and built GraphQL Federation services, migrating the monolith to a federated architecture with zero downtime.</li>
+          <li>Built APIs using RxJava and Vert.x for high-throughput backend services.</li>
+          <li>Developed Teams, DreamPicks, Multi Mode Fantasy (MMF), and Promotion GraphQL services; built the Winnings Conversion and GST Offer orchestration workflows.</li>
+          <li>Built Feed Compare, an automated sports feed validation platform with real-time Slack alerting.</li>
+          <li>Contributed to an Aerospike upgrade, including benchmarking and production validation.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="proj-tag" data-detail="Zero-downtime migration of Dream11's GraphQL layer from a monolith to a federated architecture serving production traffic at scale.">GraphQL Federation</span>
+          <span class="proj-tag" data-detail="Backend APIs and GraphQL schemas powering Teams — Dream11's team creation and management flow.">Teams</span>
+          <span class="proj-tag" data-detail="Backend APIs and GraphQL schemas powering DreamPicks, one of Dream11's fantasy game formats.">DreamPicks</span>
+          <span class="proj-tag" data-detail="Backend APIs and GraphQL schemas powering the Multi Mode Fantasy game format.">MMF</span>
+          <span class="proj-tag" data-detail="Backend workflow automating winnings conversion and GST offer orchestration for users on the platform.">Winnings</span>
+          <span class="proj-tag" data-detail="Automated platform that validates sports data feeds in real time and raises Slack alerts on mismatches.">Feed Compare</span>
+          <span class="proj-tag" data-detail="Upgrade of the Aerospike layer, including performance benchmarking and production validation before rollout.">Aerospike</span>
+        </div>
+        <div class="proj-detail" id="detail-dream11"></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        <span class="company">Bighit Sports (Agam Tech)</span>
+        Jun 2023 — Jan 2024<br>Mumbai
+      </div>
+      <div>
+        <div class="job-title">Software Engineer Consultant</div>
+        <ul>
+          <li>Built GraphQL APIs and backend services for a multi-sports athlete engagement platform.</li>
+          <li>Worked with NeptuneDB (Gremlin), DynamoDB, and Cognito on Docker/AWS infrastructure, designing scalable cloud-native services.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        <span class="company">WG Technologies</span>
+        Mar 2022 — Jun 2023<br>Mumbai
+      </div>
+      <div>
+        <div class="job-title">MERN Stack Developer</div>
+        <ul>
+          <li>Designed backend architecture and built REST APIs with Node.js and Express.js.</li>
+          <li>Implemented authentication, RBAC, and payment gateway integrations; designed MongoDB schemas and maintained AWS infrastructure.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <span class="tag">// stack</span>
+      <h2>Skills &amp; Technologies</h2>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-cat">Languages</div>
+      <div class="skill-tags"><span class="skill-tag">JavaScript</span><span class="skill-tag">TypeScript</span><span class="skill-tag">Java</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-cat">Backend</div>
+      <div class="skill-tags"><span class="skill-tag">Node.js</span><span class="skill-tag">Express.js</span><span class="skill-tag">GraphQL Federation</span><span class="skill-tag">REST APIs</span><span class="skill-tag">Microservices</span><span class="skill-tag">Vert.x</span><span class="skill-tag">RxJava</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-cat">AI &amp; Voice AI</div>
+      <div class="skill-tags"><span class="skill-tag">OpenAI Realtime API</span><span class="skill-tag">Whisper</span><span class="skill-tag">Azure Speech</span><span class="skill-tag">Azure Bodhi</span><span class="skill-tag">Deepgram</span><span class="skill-tag">ElevenLabs</span><span class="skill-tag">Cartesia</span><span class="skill-tag">OpenRouter</span><span class="skill-tag">Ultravox</span><span class="skill-tag">RAG</span><span class="skill-tag">Function Calling</span><span class="skill-tag">Prompt Engineering</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-cat">WhatsApp</div>
+      <div class="skill-tags"><span class="skill-tag">Waha</span><span class="skill-tag">Meta WhatsApp Business API</span><span class="skill-tag">DoubleTick</span><span class="skill-tag">SendPulse</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-cat">Cloud</div>
+      <div class="skill-tags"><span class="skill-tag">AWS</span><span class="skill-tag">Docker</span><span class="skill-tag">Git</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-cat">Databases</div>
+      <div class="skill-tags"><span class="skill-tag">MongoDB</span><span class="skill-tag">Redis</span><span class="skill-tag">Aerospike</span><span class="skill-tag">DynamoDB</span><span class="skill-tag">NeptuneDB</span><span class="skill-tag">MySQL</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-cat">Frontend / CMS</div>
+      <div class="skill-tags"><span class="skill-tag">React</span><span class="skill-tag">Next.js</span><span class="skill-tag">Magento</span><span class="skill-tag">WordPress</span></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head">
+      <span class="tag">// education</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu">
+      <div class="edu-date">MCA</div>
+      <div><div class="edu-degree">Master of Computer Applications</div><div class="edu-school">The Maharaja Sayajirao University of Baroda</div></div>
+    </div>
+    <div class="edu">
+      <div class="edu-date">BCA</div>
+      <div><div class="edu-degree">Bachelor of Computer Applications</div><div class="edu-school">The Maharaja Sayajirao University of Baroda</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="fmono">amreen1294@gmail.com</span>
+    <span class="fmono">Mumbai, Maharashtra, India</span>
+  </footer>
+</div>
+
+<script>
+  // terminal typewriter
+  const lines = [
+    { p: '$ whoami', o: 'senior backend engineer · 5+ yrs · mumbai' },
+    { p: '$ status --production', o: 'serving 1M+ requests/day · 0 downtime migrations' },
+    { p: '$ stack --ai', o: 'openai realtime · whisper · elevenlabs · rag pipelines' },
+    { p: '$ migrate graphql --mode=federated', o: 'monolith → federation · downtime: 0s · status: shipped' }
+  ];
+  const term = document.getElementById('term');
+  let li = 0;
+
+  function typeLine(){
+    const { p, o } = lines[li % lines.length];
+    term.innerHTML = '';
+    const pEl = document.createElement('div');
+    pEl.className = 't-prompt';
+    term.appendChild(pEl);
+    const oEl = document.createElement('div');
+    oEl.className = 't-out';
+    term.appendChild(oEl);
+
+    let i = 0;
+    const typeP = setInterval(() => {
+      pEl.textContent = p.slice(0, i+1);
+      i++;
+      if(i >= p.length){
+        clearInterval(typeP);
+        pEl.appendChild(Object.assign(document.createElement('span'), {className:'cursor'}));
+        setTimeout(() => {
+          pEl.querySelector('.cursor')?.remove();
+          typeOut();
+        }, 250);
+      }
+    }, 28);
+
+    function typeOut(){
+      let j = 0;
+      const typeO = setInterval(() => {
+        oEl.textContent = o.slice(0, j+1);
+        j++;
+        if(j >= o.length){
+          clearInterval(typeO);
+          oEl.appendChild(Object.assign(document.createElement('span'), {className:'cursor'}));
+          setTimeout(() => {
+            oEl.querySelector('.cursor')?.remove();
+            li++;
+            setTimeout(typeLine, 1800);
+          }, 1400);
+        }
+      }, 20);
+    }
+  }
+  typeLine();
+
+  // animated stat counters
+  const statEls = document.querySelectorAll('.stat .num');
+  function animateStats(){
+    statEls.forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const dur = 900;
+      const startTime = performance.now();
+      function step(now){
+        const p = Math.min((now - startTime) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(target * eased);
+        el.textContent = val + suffix;
+        if(p < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  setTimeout(animateStats, 500);
+
+  // project tag detail toggles
+  document.querySelectorAll('.job').forEach(job => {
+    const tags = job.querySelectorAll('.proj-tag');
+    const detail = job.querySelector('.proj-detail');
+    if(!detail) return;
+    tags.forEach(tag => {
+      tag.addEventListener('click', () => {
+        const already = tag.classList.contains('active');
+        tags.forEach(t => t.classList.remove('active'));
+        if(already){
+          detail.classList.remove('show');
+          return;
+        }
+        tag.classList.add('active');
+        detail.innerHTML = `<b>${tag.textContent}</b> — ${tag.dataset.detail}`;
+        detail.classList.add('show');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
